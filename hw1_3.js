@@ -475,5 +475,117 @@ let newJson = JSON.parse(jsondata);
 
 console.log(newJson);
 
+const enterprises = [{
+    id: 1,
+    name: "Предприятие 1",
+    departments: [{
+        id: 2,
+        name: "Отдел тестирования",
+        employees_count: 10,
+      },
+      {
+        id: 3,
+        name: "Отдел маркетинга",
+        employees_count: 20,
+      },
+      {
+        id: 4,
+        name: "Администрация",
+        employees_count: 15,
+      },
+    ]
+  },
+  {
+    id: 5,
+    name: "Предприятие 2",
+    departments: [{
+        id: 6,
+        name: "Отдел разработки",
+        employees_count: 50,
+      },
+      {
+        id: 7,
+        name: "Отдел маркетинга",
+        employees_count: 20,
+      },
+      {
+        id: 8,
+        name: "Отдел охраны труда",
+        employees_count: 5,
+      },
+    ]
+  },
+  {
+    id: 9,
+    name: "Предприятие 3",
+    departments: [{
+      id: 10,
+      name: "Отдел аналитики",
+      employees_count: 0,
+    }, ]
+  }
+];
+
+/*4. Вывести все предприятия и их отделы. Рядом указать количество сотрудников. Для предприятия посчитать сумму всех сотрудников во всех отделах.
+
+**Пример:**
+
+Предприятие 1 (45 сотрудников)
+- Отдел тестирования (10 сотрудников)
+- Отдел маркетинга (20 сотрудников)
+- Администрация (15 человек)
+Предприятие 2 (75 сотрудников)
+- Отдел разработки (50 сотрудников)
+- Отдел маркетинга (20 сотрудников)
+- Отдел охраны труда (5 сотрудников)
+Предприятие 3 (нет сотрудников)
+- Отдел аналитики (нет сотрудников) */
 
 
+for (let i = 0; i < enterprises.length; i++) {
+  let sums = 0;
+  let sum = enterprises[i].departments.reduce(function (sums, currentValue) {
+    return sums + currentValue.employees_count;
+  }, sums);
+  if (sum == 0) {
+    sum = "нет";
+  }
+  console.log(`${enterprises[i].name}`, `(${sum} сотрудников)`);
+
+  for (let j = 0; j < enterprises[i].departments.length; j++) { 
+  console.log(`-${enterprises[i].departments[j].name}`, `${enterprises[i].departments[j].employees_count} сотрудников`);
+  }
+}
+
+5. /* 8. Написать функцию для удаления отдела. В качестве аргумента принимает id отдела. Удалить отдел можно только, если в нем нет сотрудников.
+
+Пример:
+deleteDepartment(3) */
+
+function deleteDepartment(myid) {
+  for (let i = 0; i < enterprises.length; i++) {
+    for (let j = 0; j < enterprises[i].departments.length; j++) {
+      if (enterprises[i].departments[j].id == myid && enterprises[i].departments[j].employees_count == 0) {
+        delete enterprises[i].departments[j]; 
+      }
+    }
+  }
+}
+deleteDepartment(10);
+
+6. /* Написать функцию для переноса сотрудников между отделами одного предприятия. В качестве аргумента принимает два значения: id отдела, из которого будут переноситься сотрудники и id отдела, в который будут переноситься сотрудники).
+
+Пример:
+moveEmployees(2, 3)
+ */
+function moveEmployees(from, to) {
+  for (let i = 0; i < enterprises.length; i++) {
+    for (let j = 0; j < enterprises[i].departments.length; j++) {
+      if (enterprises[i].departments[j].id == from) {
+        enterprises[i].departments[j].employees_count -= 1;
+      } if (enterprises[i].departments[j].id == to) {
+        enterprises[i].departments[j].employees_count += 1;
+    }
+  }
+}}
+moveEmployees(2, 3);
